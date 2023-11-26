@@ -1,0 +1,27 @@
+task :cg, [:name,:arg1] do |_, args|
+  sh "dotnet aspnet-codegenerator controller -outDir Controllers -api -nv -m #{args[:name]} -name #{args[:name]}sController -dbProvider 'postgres' -dc NzWalksDbContext #{args[:arg1]}"
+end
+
+task :madd do
+  sh 'dotnet-ef migrations add '
+end
+
+task :mdrop do
+  sh 'dotnet-ef database drop'
+end
+
+task :mup do
+  sh 'dotnet-ef database update'
+end
+
+task :ml do
+  sh 'dotnet-ef migrations list'
+end
+
+task :"prod" do
+  sh 'dotnet run'
+end
+
+task :"dev" do
+  sh 'dotnet watch run'
+end
