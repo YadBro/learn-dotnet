@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NZWalks.API.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,13 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NZWalks.API.Migrations
 {
     [DbContext(typeof(NzWalksDbContext))]
-    partial class NzWalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231201092212_Seeding Other Data")]
+    partial class SeedingOtherData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.14")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -39,48 +42,19 @@ namespace NZWalks.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e3f492b-4138-44f2-92a2-1e07e55ac362"),
+                            Id = new Guid("08cb7b16-b9d2-4562-936a-f288d887023a"),
                             Name = "Easy"
                         },
                         new
                         {
-                            Id = new Guid("9eb9344d-289c-43b0-9a55-12ec36958499"),
+                            Id = new Guid("3879809c-4301-42f2-9910-01826de051a9"),
                             Name = "Medium"
                         },
                         new
                         {
-                            Id = new Guid("1b5ae5d5-f1b6-4f0b-8ade-e2566f543c69"),
+                            Id = new Guid("6d1eaf2a-00bf-4356-adee-f8360a0dc38b"),
                             Name = "Hard"
                         });
-                });
-
-            modelBuilder.Entity("NZWalks.API.Models.Domain.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("FileDescription")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("FileSizeInBytes")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Region", b =>
@@ -107,28 +81,28 @@ namespace NZWalks.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("942f65d8-edbe-4eb6-9903-13bdd9e1f6e5"),
+                            Id = new Guid("f00958b0-8493-4aab-bea1-15e381f91e42"),
                             Code = "ID",
                             Name = "Indonesia",
                             RegionImageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/510px-Flag_of_Indonesia.svg.png"
                         },
                         new
                         {
-                            Id = new Guid("cd95dfe6-6356-4955-902f-2ea7edd60bab"),
+                            Id = new Guid("4c57f343-ead8-4f5a-828f-8694f2a3d214"),
                             Code = "MY",
                             Name = "Malaysia",
                             RegionImageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Flag_of_Malaysia.svg/510px-Flag_of_Malaysia.svg.png"
                         },
                         new
                         {
-                            Id = new Guid("cd6f5294-e0a6-4958-a2ea-ad2f7990ac5c"),
+                            Id = new Guid("05400c25-be52-4bab-ab21-edb931ec6e88"),
                             Code = "PS",
                             Name = "Palestine",
                             RegionImageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/510px-Flag_of_Palestine.svg.png"
                         },
                         new
                         {
-                            Id = new Guid("ac21b38f-a6a8-42fb-a4ad-7d765233ff8e"),
+                            Id = new Guid("a51b3ed2-f5e6-455e-b0e6-02f92357c5f6"),
                             Code = "TG",
                             Name = "Testing"
                         });
@@ -167,37 +141,6 @@ namespace NZWalks.API.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("Walks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6439d890-5acd-4199-b13b-3710011b9667"),
-                            Description = "This scenic walk takes you around the top of Mount Victoria, offering stunning views of Wellington and its harbor.",
-                            DifficultyId = new Guid("8e3f492b-4138-44f2-92a2-1e07e55ac362"),
-                            LengthInKm = 3.5,
-                            Name = "Mount Victoria Loop",
-                            RegionId = new Guid("942f65d8-edbe-4eb6-9903-13bdd9e1f6e5"),
-                            WalkImageURL = "https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        },
-                        new
-                        {
-                            Id = new Guid("1431b016-1b82-4edc-aef5-b327a7e55f75"),
-                            Description = "This walk takes you along the wild and rugged coastline of Makara Beach, with breathtaking views of the Tasman Sea.",
-                            DifficultyId = new Guid("9eb9344d-289c-43b0-9a55-12ec36958499"),
-                            LengthInKm = 8.1999999999999993,
-                            Name = "Makara Beach Walkway",
-                            RegionId = new Guid("cd95dfe6-6356-4955-902f-2ea7edd60bab"),
-                            WalkImageURL = "https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        },
-                        new
-                        {
-                            Id = new Guid("235fa61a-b6dd-4dd5-8e32-2523fd15bdb8"),
-                            Description = "Explore the beautiful Botanic Garden of Wellington on this leisurely walk, with a wide variety of plants and flowers to admire.",
-                            DifficultyId = new Guid("1b5ae5d5-f1b6-4f0b-8ade-e2566f543c69"),
-                            LengthInKm = 0.0,
-                            Name = "Botanic Garden Walk",
-                            RegionId = new Guid("cd6f5294-e0a6-4958-a2ea-ad2f7990ac5c")
-                        });
                 });
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Walk", b =>

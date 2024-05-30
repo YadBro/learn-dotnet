@@ -12,6 +12,8 @@ namespace NZWalks.API.Models.DTO
 
     public string? WalkImageURL { get; set; }
 
+    public object Meta { get; set; }
+
     public DifficultyDto Difficulty { get; set; }
     public RegionDto Region { get; set; }
   }

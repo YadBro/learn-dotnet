@@ -5,7 +5,7 @@ namespace NZWalks.API.Data
 {
   public class NzWalksDbContext : DbContext
   {
-    public NzWalksDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+    public NzWalksDbContext(DbContextOptions<NzWalksDbContext> dbContextOptions) : base(dbContextOptions)
     {
 
     }
@@ -13,6 +13,7 @@ namespace NZWalks.API.Data
     public DbSet<Difficulty> Difficulties { get; set; }
     public DbSet<Region> Regions { get; set; }
     public DbSet<Walk> Walks { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,6 +67,37 @@ namespace NZWalks.API.Data
 
       // Seed regions to the database
       modelBuilder.Entity<Region>().HasData(regions);
+
+      var walks = new List<Walk>() {
+        new() {
+          Id = Guid.NewGuid(),
+          Name = "Mount Victoria Loop",
+          Description = "This scenic walk takes you around the top of Mount Victoria, offering stunning views of Wellington and its harbor.",
+          LengthInKm = 3.5,
+          WalkImageURL = "https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          DifficultyId = difficulties[0].Id,
+          RegionId = regions[0].Id,
+        },
+        new() {
+          Id = Guid.NewGuid(),
+          Name = "Makara Beach Walkway",
+          Description = "This walk takes you along the wild and rugged coastline of Makara Beach, with breathtaking views of the Tasman Sea.",
+          LengthInKm = 8.2,
+          WalkImageURL = "https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          DifficultyId = difficulties[1].Id,
+          RegionId = regions[1].Id,
+        },
+        new() {
+          Id = Guid.NewGuid(),
+          Name = "Botanic Garden Walk",
+          Description = "Explore the beautiful Botanic Garden of Wellington on this leisurely walk, with a wide variety of plants and flowers to admire.",
+          DifficultyId = difficulties[2].Id,
+          RegionId = regions[2].Id,
+        }
+      };
+
+      // Seed walks to database
+      modelBuilder.Entity<Walk>().HasData(walks);
     }
   }
 }

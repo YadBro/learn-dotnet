@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
@@ -24,6 +26,7 @@ namespace NZWalks.API.Controllers
 
         // GET: api/Regions
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<ActionResult<IEnumerable<Region>>> GetRegions()
         {
             var regionsDomain = await _regionRepository.GetRegions();
@@ -35,16 +38,17 @@ namespace NZWalks.API.Controllers
 
         // GET: api/Regions/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Reader")]
         public async Task<ActionResult<Region>> GetRegion(Guid id)
         {
-            var regionDomain = await _regionRepository.GetRegion(id);
+            var regionDomainModel = await _regionRepository.GetRegion(id);
 
-            if (regionDomain == null)
+            if (regionDomainModel == null)
             {
                 return NotFound();
             }
 
-            var regionDto = _mapper.Map<RegionDto>(regionDomain);
+            var regionDto = _mapper.Map<RegionDto>(regionDomainModel);
 
             return Ok(regionDto);
         }
@@ -52,6 +56,8 @@ namespace NZWalks.API.Controllers
         // PUT: api/Regions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> PutRegion(Guid id, UpdateRegionRequestDto updateRegionRequestDto)
         {
             var regionDomainModel = _mapper.Map<Region>(updateRegionRequestDto);
@@ -71,11 +77,13 @@ namespace NZWalks.API.Controllers
         // POST: api/Regions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<ActionResult<AddRegionRequestDto>> PostRegion(AddRegionRequestDto addRegionRequestDto)
         {
             if (_dbContext.Regions == null)
             {
-                return Problem("Entity set 'NzWalksDbContext.Regions'  is null.");
+                return Problem("Entity set 'NzWalksDbContext.Regions' is null.");
             }
 
             var regionDomainModel = _mapper.Map<Region>(addRegionRequestDto);
@@ -90,6 +98,7 @@ namespace NZWalks.API.Controllers
 
         // DELETE: api/Regions/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteRegion(Guid id)
         {
             var regionDomainModel = await _regionRepository.Delete(id);
